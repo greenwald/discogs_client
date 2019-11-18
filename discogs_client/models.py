@@ -480,7 +480,8 @@ class Release(PrimaryAPIObject):
     credits = ListField('Artist', key='extraartists')
     labels = ListField('Label')
     companies = ListField('Label')
-
+    community = ObjectField('Community')
+    
     def __init__(self, client, dict_):
         super(Release, self).__init__(client, dict_)
         self.data['resource_url'] = '{0}/releases/{1}'.format(client._base_url, dict_['id'])
@@ -717,6 +718,14 @@ class Video(SecondaryAPIObject):
     def __repr__(self):
         return self.repr_str('<Video {0!r}>'.format(self.title))
 
+class Community(SecondaryAPIObject):
+    have = SimpleField()
+    want = SimpleField()
+
+    def __repr__(self):
+        return self.repr_str('<Community {0!r} {1!r}>'.format(self.have, self.want))
+
+    
 CLASS_MAP = {
     'artist': Artist,
     'release': Release,
@@ -730,4 +739,5 @@ CLASS_MAP = {
     'listing': Listing,
     'wantlistitem': WantlistItem,
     'ordermessage': OrderMessage,
+    'community': Community,
 }
